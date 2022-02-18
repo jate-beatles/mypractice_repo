@@ -68,3 +68,9 @@ plt. figure()
 xvals = range(len(linear_data))
 plt.bar(xvals, linear_data, width = 0.3)
 
+new_xvals = []
+for item in xvals:
+    new_xvals.append(item +0.3)
+
+plt.bar(new_xvals, quardratic, width = 0.3, color = 'red')
+
