@@ -32,4 +32,9 @@ for n in ax:
         n.append('ax'+ str(num))
 print(ax)
 fig, ax =plt.subplots(3,3,sharex =True)
-ax3.plot(linear_data,'-')
+ax[1][1].plot(linear_data,'-')
+
+
+
+
+
