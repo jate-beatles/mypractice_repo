@@ -74,8 +74,16 @@ grid_main.scatter(X,Y)
 grid_top.hist(X,bins=100)
 grid_right.hist(Y,bins =100, orientation = 'horizontal')
 
+plt.figure()
+gspec2 = gridspec.GridSpec(10,10)
 
+grid_top1 = plt.subplot(gspec2[:2,3:10])
+grid_left1 =plt.subplot(gspec2[3:10,:2])
+grid_main1 = plt.subplot(gspec2[3:,3:])
+Y = np.random.normal(0,1,10000)
+X = np.random.random(10000)
+grid_top1.hist(X,bins = 100)
+grid_left1.hist(Y,bins = 100, orientation = 'horizontal')
+grid_main1.scatter(X,Y)
+grid_left1.invert_xaxis()
 
-
-
-# %%
