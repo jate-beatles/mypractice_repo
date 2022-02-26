@@ -1,4 +1,5 @@
 #%%
+from math import gamma
 from random import random
 from turtle import color
 import matplotlib.pyplot as plt
@@ -86,4 +87,33 @@ grid_top1.hist(X,bins = 100)
 grid_left1.hist(Y,bins = 100, orientation = 'horizontal')
 grid_main1.scatter(X,Y)
 grid_left1.invert_xaxis()
+
+
+
+import numpy as np 
+import pandas as pd
+
+normal_sample = np.random.normal(0,1,10000)
+random_sample = np.random.random(10000)
+gamma_sample = np.random.gamma(2,size = 10000)
+
+df_boxplot = pd.DataFrame({'normal':normal_sample,
+                            'random':random_sample,
+                            'gamma':gamma_sample})
+
+# df_boxplot.info()
+# df_boxplot.describe()
+
+# plt.figure()
+# _ = plt.boxplot(df_boxplot['normal'])
+
+plt.clf()
+_=plt.boxplot ( [df_boxplot['normal'], df_boxplot['random'], df_boxplot['gamma']],whis = 10)
+
+plt.figure()
+_ = plt.hist(df_boxplot['gamma'], bins = 100)
+
+
+
+
 
