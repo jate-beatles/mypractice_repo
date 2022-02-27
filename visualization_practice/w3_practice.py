@@ -113,7 +113,40 @@ _=plt.boxplot ( [df_boxplot['normal'], df_boxplot['random'], df_boxplot['gamma']
 plt.figure()
 _ = plt.hist(df_boxplot['gamma'], bins = 100)
 
+#%%
+from random import shuffle
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+
+origins = ['China','Braziil', 'India','USA', 'Canada','UK', 'Germany', 'Iraq','Chile', 'Mexico']
+
+shuffle(origins)
+
+df = pd.DataFrame({'height':np.random.rand(10),
+                    'weight':np.random.rand(10),
+                    'origin':origins})
+df
+
+plt.figure()
+plt.scatter(df['height'], df['weight'], picker =5)
+plt.gca().set_ylabel('Weight')
+plt.gca().set_xlabel('Height')
+
+def onpick(event):
+    origin = df.iloc[event.ind[0]]['origin']
+    plt.gca().set_title('Selectecd item came from {}'.format(origin))
+
+plt.gcf().canvas.mpl_connect('pick_event', onpick)
+###event listener and write it up using the mpl_connect function
 
 
 
 
+
+
+
+
+# %%
