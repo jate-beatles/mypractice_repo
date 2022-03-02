@@ -80,8 +80,9 @@ redw['Win %_RedWings']=redw['Wins']/(redw['Wins']+redw['Losses'])
 redw=redw.reset_index()
 
 # Merge data for visualize
-Big4_Michigan=pd.join(lions.drop(['Wins','Losses'], axis=1),tigers.drop(['Wins','Losses'], axis=1),pistons.drop(['Wins','Losses'], axis=1), redw.drop(['Wins','Losses'], axis=1), on=['Year'])
-Big4_Michigan
+Big4_Michigan=pd.merge(lions.drop(['Wins','Losses'], axis=1),tigers.drop(['Wins','Losses'], axis=1),on='Year')
+Big4_Michigan=pd.merge(Big4_Michigan,pistons.drop(['Wins','Losses'], axis=1),on='Year')
+Big4_Michigan=pd.merge(Big4_Michigan,redw.drop(['Wins','Losses'], axis=1),on='Year')
 
 #########################################################Data Ready for drawing KDE
 
