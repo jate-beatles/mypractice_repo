@@ -78,25 +78,70 @@ LABEL_COLUMN = 'fare_amount'
 DEFAULTS = [[0.0], ['na'], [0.0], [0.0],[0.0],[0.0],[0.0],['na']]
 UNWATED_COLS = ['pickup_datetime', 'key']
 
+def create_dateset(pattern):
+    return tf.data.experimental.make_csv_dataset(
+        pattern, 1, CSV_COLUMNS, DEFAULTS) 
+
+###tf.data.experimental.make_csv_dataset(
+#     file_pattern,
+#     batch_size,
+#     column_names=None,
+#     column_defaults=None,
+#     label_name=None,
+#     select_columns=None,
+#     field_delim=',',
+#     use_quote_delim=True,
+#     na_value='',
+#     header=True,
+#     num_epochs=None,
+#     shuffle=True,
+#     shuffle_buffer_size=10000,
+#     shuffle_seed=None,
+#     prefetch_buffer_size=None,
+#     num_parallel_reads=None,
+#     sloppy=False,
+#     num_rows_for_inference=100,
+#     compression_type=None,
+#     ignore_errors=False
+
+tempds = create_dataset("../toy_data/taxi-train")
+
+##iterate over first two element of this dataset using dataset.take(2)
+##Then convert python dictionary with numpy array as values for more readablitly 
+
+for data in tempds.take(2):
+    pprint({k: v.numpy() for k,v in data.intem()})
+
+### Transforming the features 
+
+
+
+
+
+
+
+
 def features_and_labels(row_data):
-    label = row_data.pop(LABEL_COLUMN) ##removed the NULL data as DEFAULTS  
+    label = row_data.pop(LABEL_COLUMN) ###removed the NULL data as DEFAULTS  
     features = row_data
 
     for unwated_col in UNWATED_COLS:
         features.pop(unwated_col)
     return features, label 
 
-##tf.data.experimetal.make_csv_dataset() method reads CSV files into a dataset
-def creat_dataset(pattern, batch_size=1, mod="eval"):
+###tf.data.experimetal.make_csv_dataset() method reads CSV files into a dataset
+def create_dataset(pattern, batch_size=1, mod="eval"):
     dataset =tf.data.experimental.make_csv_dataset(
         pattern, batch_size, CSV_COLUMNS, DEFAULTS 
-    )
+    )####data.experimental.make_csv_dataset() method reads CSV files 
     dataset = dataset.map(features_and_labels)
 
     if mode =="train":
         dataset = dataset.shuflle(buffer_size = 1000).repeat()
-    dataset = dataset.prefetch(1) ##take advantage of multi-threading; 1= autotune
+    dataset = dataset.prefetch(1) ##take advantage of multi-threading; 1 = autotune
     return dataset 
+
+
 
 
 
