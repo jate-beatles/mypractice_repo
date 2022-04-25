@@ -104,17 +104,30 @@ def create_dateset(pattern):
 #     compression_type=None,
 #     ignore_errors=False
 
-tempds = create_dataset("../toy_data/taxi-train")
+tempds = create_dataset("../data/taxi-train")
+pprint(tempds)
 
 ##iterate over first two element of this dataset using dataset.take(2)
 ##Then convert python dictionary with numpy array as values for more readablitly 
-
 for data in tempds.take(2):
-    pprint({k: v.numpy() for k,v in data.intem()})
+    pprint({k: v.numpy() for k,v in data.items()}) ##pprint is pretty print for JSON 
+    print("\n") 
 
 ### Transforming the features 
+UNWANTED_COLS = ['pickup_datetime', 'key']
 
+def features_and_labels(row_data):
+    label = row_data.pop(LABEL_COLUMN)
+    features = row_data
 
+    for unwanted_col in UNWANTED_COLS:
+        features.pop(unwanted_col)
+    
+    return features, label
+
+# for data in tempds.take(2):
+#     pprint({k: v.numpy() for k,v in data.items()}) ##pprint is pretty print for JSON 
+#     print("\n") 
 
 
 
