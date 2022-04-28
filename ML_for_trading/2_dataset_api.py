@@ -82,11 +82,13 @@ def create_dateset(pattern):
     return tf.data.experimental.make_csv_dataset(
         pattern, 1, CSV_COLUMNS, DEFAULTS) 
 
+#https://www.tensorflow.org/api_docs/python/tf/data/experimental/make_csv_dataset
+
 ###tf.data.experimental.make_csv_dataset(
-#     file_pattern,
-#     batch_size,
+#     file_pattern,--path   
+#     batch_size, 
 #     column_names=None,
-#     column_defaults=None,
+#     column_defaults=None, Default
 #     label_name=None,
 #     select_columns=None,
 #     field_delim=',',
@@ -143,11 +145,14 @@ def features_and_labels(row_data):
     return features, label 
 
 ###tf.data.experimetal.make_csv_dataset() method reads CSV files into a dataset
-def create_dataset(pattern, batch_size=1, mod="eval"):
+def create_dataset(pattern, batch_size=1, mode="eval"):
     dataset =tf.data.experimental.make_csv_dataset(
         pattern, batch_size, CSV_COLUMNS, DEFAULTS 
     )####data.experimental.make_csv_dataset() method reads CSV files 
-    dataset = dataset.map(features_and_labels)
+    #The map() function executes a specified function for each item in an iterable
+
+    dataset = dataset.map(features_and_labels).cache()
+
 
     if mode =="train":
         dataset = dataset.shuflle(buffer_size = 1000).repeat()
